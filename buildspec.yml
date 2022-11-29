@@ -32,7 +32,7 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...          
       - docker build --cache-from 923954127216.dkr.ecr.us-east-2.amazonaws.com/sample-demo-repo .
-      - docker tag samplerepo:latest 923954127216.dkr.ecr.us-east-2.amazonaws.com/sample-demo-repo:latest
+      - docker tag sample-demo-repo:latest 923954127216.dkr.ecr.us-east-2.amazonaws.com/sample-demo-repo:latest
       
   post_build:
     commands:
