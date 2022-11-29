@@ -43,7 +43,7 @@ phases:
       - echo Push the latest image to cluster
       - rm -rf .kube/config
       - aws sts get-caller-identity
-      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default && aws configure set region "us-east-2" --profile default && aws configure set output "" --profile default
+      - aws configure set aws_access_key_id AKIA5OH7VEFYLFETIUUA --profile default && aws configure set aws_secret_access_key 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 --profile default && aws configure set region "us-east-2" --profile default && aws configure set output "" --profile default
       - aws eks update-kubeconfig --name k8scluster --region us-east-2  
       - kubectl apply -f eks_cicd/deployment.yaml
       - kubectl apply -f eks_cicd/service.yaml
