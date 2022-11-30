@@ -18,33 +18,33 @@ phases:
     commands:
       - aws sts get-caller-identity
       - echo Logging in to Amazon EKS...
-      - aws eks update-kubeconfig --name k8scluster --region us-east-2 
+      - aws eks update-kubeconfig --name SRIDEV --region us-east-2 
       - kubectl config view --minify
       - echo check kubectl access
      
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-2  | docker login --username AWS --password-stdin  923954127216.dkr.ecr.us-east-2.amazonaws.com
+      - aws ecr get-login-password --region us-east-2  | docker login --username AWS --password-stdin  096397077263.dkr.ecr.us-east-2.amazonaws.com
       - docker build -t samplerepo .
-      - docker tag samplerepo:latest 923954127216.dkr.ecr.us-east-2.amazonaws.com/sample-demo-repo:latest      
+      - docker tag srirepo:latest 096397077263.dkr.ecr.us-east-2.amazonaws.com/srirepo:latest      
 
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...          
-      - docker build --cache-from 923954127216.dkr.ecr.us-east-2.amazonaws.com/sample-demo-repo .
-      - docker tag sample-demo-repo:latest 923954127216.dkr.ecr.us-east-2.amazonaws.com/sample-demo-repo:latest
+      - docker build --cache-from 096397077263.dkr.ecr.us-east-2.amazonaws.com/srirepo .
+      - docker tag srirepo:latest 096397077263.dkr.ecr.us-east-2.amazonaws.com/srirepo:latest
       
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push 923954127216.dkr.ecr.us-east-2.amazonaws.com/sample-demo-repo:latest
-      - docker pull 923954127216.dkr.ecr.us-east-2.amazonaws.com/sample-demo-repo:latest
+      - docker push 096397077263.dkr.ecr.us-east-2.amazonaws.com/srirepo:latest
+      - docker pull 096397077263.dkr.ecr.us-east-2.amazonaws.com/srirepo:latest
       - echo Push the latest image to cluster
       - rm -rf .kube/config
       - aws sts get-caller-identity
-      - aws configure set aws_access_key_id AKIA5OH7VEFYLFETIUUA --profile default && aws configure set aws_secret_access_key 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 --profile default && aws configure set region "us-east-2" --profile default && aws configure set output "" --profile default
-      - aws eks update-kubeconfig --name k8scluster --region us-east-2  
+      - aws configure set aws_access_key_id AKIARM4NWVMH64LO7N54 --profile default && aws configure set aws_secret_access_key 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 --profile default && aws configure set region "us-east-2" --profile default && aws configure set output "" --profile default
+      - aws eks update-kubeconfig --name SRIDEV --region us-east-2  
       - kubectl apply -f eks_cicd/deployment.yaml
       - kubectl apply -f eks_cicd/service.yaml
 #      - kubectl rollout restart -f eks_cicd/deployment.yaml
